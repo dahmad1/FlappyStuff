@@ -42,31 +42,40 @@ function RenderNewObject(context) {
   context.fillRect(NEWCOORD.newX, NEWCOORD.newY, 100, 100);
   }
 
+function handleObstacleMovement(context) {
+  NEWCOORD.newX = NEWCOORD.newX + 1;
+}
 
+/*
 function HandleNewObjectMovement(context) {
     NEWCOORD.newX = NEWCOORD.newX + 1;
     NEWCOORD.newY = NEWCOORD.newY + 1;
 }
+*/
 
 function runGame() {
   var canvas = document.getElementById('mainCanvas');
   var context = canvas.getContext('2d');
+  var myObstacle = new component(10, 200, "green", 300, 120);
   if (GAME.started) {
-
     // 1 - Reposition the objects
-    handleShipAnimation();
-    HandleNewObjectMovement(context);
+    //handleShipAnimation();
+    //HandleNewObjectMovement(context);
 
     // 2 - Clear the CANVAS
-    context.clearRect(0, 0, 600, 300);
-
+    //context.clearRect(0, 0, 600, 300);
+    myObstacle.update();
     // 3 - Draw new items
-    RenderSpaceship(context);
-    RenderNewObject(context);
+    //RenderSpaceship(context);
+    //RenderNewObject(context);
 
   } else {
     context.font = "30px Arial";
     context.fillText("Game Over      Level " + GAME.level, 135, 200);
+  }
+  function update()
+  {
+    myObstacle.x += -1;
   }
   window.requestAnimationFrame(runGame);
 }
