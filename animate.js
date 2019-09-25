@@ -7,39 +7,22 @@
 //a countdown to when the next obstacles will be produced. Reset when they are
 var timeToBlocks = 180;
 
-function handleShipAnimation() {
-  if (CONTROLS.ship.forward) {
-    var radians = (Math.PI / 180) * SPACE_SHIP.rotation,
-    cos = Math.cos(radians),
-    sin = Math.sin(radians);
-    SPACE_SHIP.x += SPACE_SHIP.speed * sin;
-    SPACE_SHIP.y +=  SPACE_SHIP.speed * cos;
+function HandleCircleAnimation() {
+  if (CONTROLS.bird.jump) {
+    BIRD.v-=2;
   }
-  if (CONTROLS.ship.backward) {
-    var radians = (Math.PI / 180) * SPACE_SHIP.rotation,
-    cos = Math.cos(radians),
-    sin = Math.sin(radians);
-    SPACE_SHIP.x -= SPACE_SHIP.speed * sin;
-    SPACE_SHIP.y -=  SPACE_SHIP.speed * cos;
-  }
-  if (CONTROLS.ship.rotateClockwise) {
-    SPACE_SHIP.rotation -= 4;
-  }
-  if (CONTROLS.ship.rotateCounterClockwise) {
-    SPACE_SHIP.rotation += 4;
+  BIRD.y += BIRD.v;
+  BIRD.v += BIRD.a;
   }
 
-  // Check if asteroid is leaving the boundary, if so, switch sides
-  if (SPACE_SHIP.x > GAME.canvas.width) {
-    SPACE_SHIP.x = 0;
-  } else if (SPACE_SHIP.x < 0) {
-    SPACE_SHIP.x = 600;
-  } else if (SPACE_SHIP.y > GAME.canvas.height) {
-    SPACE_SHIP.y = 0;
-  } else if (SPACE_SHIP.y < 0) {
-    SPACE_SHIP.y = 300;
-  }
-}
+  function RenderCircle(context){
+    context.stroke();
+    context.beginPath();
+     context.arc(100, 100, 25, 0, 2*Math.pi);
+     context.strokeStyle = "#000000";
+     context.stroke();
+     context.fill();
+     }
 
 //draws all obstacles from the array OBSTACLES onto the screen
 function RenderObstacles(context) {
@@ -80,13 +63,13 @@ function runGame() {
   var context = canvas.getContext('2d');
   if (GAME.started) {
     // 1 - Reposition the objects
-    //handleShipAnimation();
+    HandleCircleAnimation();
     HandleObstacleMovement(context);
 
     // 2 - Clear the CANVAS
     context.clearRect(0, 0, 600, 300);
     // 3 - Draw new items
-    //RenderSpaceship(context);
+    RenderCircle(context);
     RenderObstacles(context);
 
   } else {

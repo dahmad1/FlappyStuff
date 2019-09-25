@@ -13,8 +13,8 @@ var CONTROLS = {
   fire : {
     active : false,
     lastFireTime : 0
-  }
-
+  },
+  bird : {jump : false}
 };
 
 document.addEventListener('keydown', function(event) {
@@ -32,7 +32,7 @@ document.addEventListener('keydown', function(event) {
       CONTROLS.ship.rotateClockwise = true;
       break;
     case " ":
-      CONTROLS.fire.active = true;
+      CONTROLS.bird.jump = true;
       break;
     default:
       break;
@@ -55,7 +55,7 @@ document.addEventListener('keyup', function(event) {
       CONTROLS.ship.rotateClockwise = false;
       break;
     case " ":
-      CONTROLS.fire.active = false;
+      CONTROLS.bird.jump = false;
       break;
     default:
       break;

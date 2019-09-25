@@ -8,6 +8,6 @@
 function Start() {
 
   // Initialize Spaceship
-  //InitializeSpaceship();
+  //InitializeBird();
   runGame();
 }

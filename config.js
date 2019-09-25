@@ -17,3 +17,10 @@ var SPACE_SHIP = {
 };
 
 var OBSTACLE = [];
+
+var BIRD = {
+  x : 100,
+  y : 100,
+  a : .0001,
+  v : 0
+}
