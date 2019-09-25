@@ -3,6 +3,10 @@
 *    keyboard control
 *
 */
+
+//a countdown to when the next obstacles will be produced. Reset when they are
+var timeToBlocks = 180;
+
 function handleShipAnimation() {
   if (CONTROLS.ship.forward) {
     var radians = (Math.PI / 180) * SPACE_SHIP.rotation,
@@ -37,46 +41,59 @@ function handleShipAnimation() {
   }
 }
 
-function RenderNewObject(context) {
-
-  context.fillRect(NEWCOORD.newX, NEWCOORD.newY, 100, 100);
+//draws all obstacles from the array OBSTACLES onto the screen
+function RenderObstacles(context) {
+  for (i = 0; i< OBSTACLE.length; i++){
+    context.fillRect(OBSTACLE[i].x, OBSTACLE[i].y, 50, 200);
+  }
   }
 
-function handleObstacleMovement(context) {
-  NEWCOORD.newX = NEWCOORD.newX + 1;
+  //decides where the gap between new obstacles will be placed
+  function RandomHeight(){
+    return Math.round(Math.random()*200 -200);
+  }
+
+
+//moves all the obstacles, then creates new ones if 3 seconds have elapsed.
+//also, deletes obstacles fromt the OBSTACLE array once they are off screen
+function HandleObstacleMovement(context) {
+      timeToBlocks--;
+      if (timeToBlocks==0){
+        var h = RandomHeight();
+        OBSTACLE.push({x: 600, y: h});
+        OBSTACLE.push({x: 600, y: h+300});
+        timeToBlocks=180;
+      }
+      for (i = 0; i< OBSTACLE.length; i++){
+        OBSTACLE[i].x -=1;
+      }
+      if (OBSTACLE.length>0 && OBSTACLE[0].x<=-60){
+        OBSTACLE.shift();
+        OBSTACLE.shift();
+      }
 }
 
-/*
-function HandleNewObjectMovement(context) {
-    NEWCOORD.newX = NEWCOORD.newX + 1;
-    NEWCOORD.newY = NEWCOORD.newY + 1;
-}
-*/
+
 
 function runGame() {
   var canvas = document.getElementById('mainCanvas');
   var context = canvas.getContext('2d');
-  var myObstacle = new component(10, 200, "green", 300, 120);
   if (GAME.started) {
     // 1 - Reposition the objects
     //handleShipAnimation();
-    //HandleNewObjectMovement(context);
+    HandleObstacleMovement(context);
 
     // 2 - Clear the CANVAS
-    //context.clearRect(0, 0, 600, 300);
-    myObstacle.update();
+    context.clearRect(0, 0, 600, 300);
     // 3 - Draw new items
     //RenderSpaceship(context);
-    //RenderNewObject(context);
+    RenderObstacles(context);
 
   } else {
     context.font = "30px Arial";
     context.fillText("Game Over      Level " + GAME.level, 135, 200);
   }
-  function update()
-  {
-    myObstacle.x += -1;
-  }
+
   window.requestAnimationFrame(runGame);
 }
 

@@ -16,12 +16,4 @@ var SPACE_SHIP = {
   }
 };
 
-var NEW_OBJECT = {
-  x : 0,
-  y : 0
-};
-
-var NEWCOORD = {
-  newX : 0,
-  newY : 0,
-};
+var OBSTACLE = [];
