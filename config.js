@@ -21,6 +21,7 @@ var OBSTACLE = [];
 var BIRD = {
   x : 100,
   y : 100,
-  a : .0001,
-  v : 0
+  a : .06,
+  v : 0,
+  delay : 0
 }
